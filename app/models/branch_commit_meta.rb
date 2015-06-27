@@ -1,7 +1,7 @@
 class BranchCommitMeta
 	include Mongoid::Document
 
-	#uniqueness factors  
+	#uniqueness factors
 	field :created_at_date,type: Date
 	field :branch, type: String
 	field :email, type: String
@@ -32,12 +32,13 @@ class BranchCommitMeta
 
 	def get_report(group_by="daily")
 		hash = {}
-		if(group_by=="daily")
+		if group_by == "daily"
 			hash[self.timestamp] = {commits: self.commits}
 		else
-			hash = {(self.timestamp) => {commits: self["hourly_commits.0"]},  (self.timestamp)+(3600000*1) => {commits: self["hourly_commits.1"]},  (self.timestamp)+(3600000*2) => {commits: self["hourly_commits.2"]},  (self.timestamp)+(3600000*3) => {commits: self["hourly_commits.3"]},  (self.timestamp)+(3600000*4) => {commits: self["hourly_commits.4"]},  (self.timestamp)+(3600000*5) => {commits: self["hourly_commits.5"]},  (self.timestamp)+(3600000*6) => {commits: self["hourly_commits.6"]},  (self.timestamp)+(3600000*7) => {commits: self["hourly_commits.7"]},  (self.timestamp)+(3600000*8) => {commits: self["hourly_commits.8"]},  (self.timestamp)+(3600000*9) => {commits: self["hourly_commits.9"]},  (self.timestamp)+(3600000*10) => {commits: self["hourly_commits.10"]},  (self.timestamp)+(3600000*11) => {commits: self["hourly_commits.11"]},  (self.timestamp)+(3600000*12) => {commits: self["hourly_commits.12"]},  (self.timestamp)+(3600000*13) => {commits: self["hourly_commits.13"]},  (self.timestamp)+(3600000*14) => {commits: self["hourly_commits.14"]},  (self.timestamp)+(3600000*15) => {commits: self["hourly_commits.15"]},  (self.timestamp)+(3600000*16) => {commits: self["hourly_commits.16"]},  (self.timestamp)+(3600000*17) => {commits: self["hourly_commits.17"]},  (self.timestamp)+(3600000*18) => {commits: self["hourly_commits.18"]},  (self.timestamp)+(3600000*19) => {commits: self["hourly_commits.19"]},  (self.timestamp)+(3600000*20) => {commits: self["hourly_commits.20"]},  (self.timestamp)+(3600000*21) => {commits: self["hourly_commits.21"]},  (self.timestamp)+(3600000*22) => {commits: self["hourly_commits.22"]},  (self.timestamp)+(3600000*23) => {commits: self["hourly_commits.23"]}} 
+			24.times do |hour|
+				hash[(self.timestamp+3600000*hour)] = {commits: self["hourly_commits.#{hour}"]}
+			end
 		end
-		hash
 	end
 
 end
