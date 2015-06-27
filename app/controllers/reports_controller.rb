@@ -1,5 +1,5 @@
 class ReportsController < ActionController::Base
-
+	before_action :authenticate_user!
 	layout "report1", :only => :report1
 	def report1
 		render template: "common"
@@ -17,7 +17,7 @@ class ReportsController < ActionController::Base
 			matcher = {created_at_date: {'$gte' =>  Time.parse(start_date).beginning_of_day, '$lte' => Time.parse(end_date).end_of_day}}
 		end
 		matcher[:cwday] = params[:day].to_i if(params[:day].present?)
-		
+
 		matcher[:email] = email if(email.present?)
 		if(params[:type].present?)
 			type = params[:type]
